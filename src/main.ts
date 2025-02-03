@@ -6,6 +6,10 @@ import { Logger } from '@nestjs/common';
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
 
+  logger.debug('Variables de entorno:', {
+    mongoUri: process.env.MONGODB_URI ? 'definida' : 'no definida'
+  });
+
   // Validar la variable de entorno MONGODB_URI
   if (!process.env.MONGODB_URI) {
     logger.error('La variable de entorno MONGODB_URI no está definida');
