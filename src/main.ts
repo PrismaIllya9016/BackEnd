@@ -7,12 +7,15 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap');
 
   logger.debug('Variables de entorno:', {
-    mongoUri: process.env.MONGODB_URI ? 'definida' : 'no definida'
+    mongoUri: process.env.MONGODB_URI ? 'definida' : 'no definida',
+    jwtSecret: process.env.JWT_SECRET ? 'definida' : 'no definida'
   });
 
-  // Validar la variable de entorno MONGODB_URI
-  if (!process.env.MONGODB_URI) {
-    logger.error('La variable de entorno MONGODB_URI no está definida');
+  // Validar variables de entorno requeridas
+  if (!process.env.MONGODB_URI || !process.env.JWT_SECRET) {
+    logger.error('Faltan variables de entorno requeridas');
+    if (!process.env.MONGODB_URI) logger.error('MONGODB_URI no está definida');
+    if (!process.env.JWT_SECRET) logger.error('JWT_SECRET no está definida');
     process.exit(1);
   }
 
